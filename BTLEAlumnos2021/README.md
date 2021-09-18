@@ -1,0 +1,1 @@
+Es un esqueleto de la app en android
