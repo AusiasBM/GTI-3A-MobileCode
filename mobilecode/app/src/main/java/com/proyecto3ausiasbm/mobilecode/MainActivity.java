@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView elTexto;
     private Button elBotonEnviar;
 
+    private List<Medicion> mediciones;
+
     // --------------------------------------------------------------
     // --------------------------------------------------------------
     private void buscarTodosLosDispositivosBTLE() {
@@ -135,6 +137,31 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
 
+        mediciones.add(
+          new Medicion(
+                  Utilidades.bytesToInt(tib.getMinor()),
+                  Utilidades.bytesToInt(tib.getMajor()),
+                  29.99600901262704,
+                  -5.16582290057630056
+          )
+        );
+
+        if(mediciones.size() > 50){
+            try {
+                // Enviar por POST
+                for (Medicion med: mediciones) {
+                    boton_enviar_pulsado(
+                            "POST",
+                            med.toString(),
+                            "http://192.168.1.34:3500/api/anyadir-medicion"
+                    );
+                }
+                mediciones.clear();
+                logPantalla.setText("Mediciones insertadas");
+            }catch (Exception error){
+                logPantalla.setText("Error al insertar");
+            }
+        }
     } // ()
 
     // --------------------------------------------------------------
@@ -363,19 +390,17 @@ public class MainActivity extends AppCompatActivity {
 
     // Peticiones REST
 
-
-
-    //-------------------------------------------------------------------------
-    //-------------------------------------------------------------------------
-    public void boton_enviar_pulsado (View quien) {
+    // public void boton_enviar_pulsado (View quien) {
+    // "http://192.168.1.34:3500/api/todas-las-mediciones"
+    public void boton_enviar_pulsado (String tipo, String body, String ruta) {
         Log.d("clienterestandroid", "boton_enviar_pulsado");
         this.logPantalla.setText("pulsado");
 
         // ojo: creo que hay que crear uno nuevo cada vez
         PeticionarioREST elPeticionario = new PeticionarioREST();
         String jsontext = "{\"medida\":\""+ elTexto.getText() + "\"}";
-        elPeticionario.hacerPeticionREST("GET",  "http://192.168.1.34:3500/api/todas-las-mediciones",
-                null,
+        elPeticionario.hacerPeticionREST(tipo,  ruta,
+                body,
                 new PeticionarioREST.RespuestaREST () {
                     @Override
                     public void callback(int codigo, String cuerpo) {
