@@ -9,11 +9,14 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -39,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothLeScanner elEscanner;
 
     private ScanCallback callbackDelEscaneo = null;
+
+    private TextView logPantalla;
+
+    private TextView elTexto;
+    private Button elBotonEnviar;
+
+    private List<Medicion> mediciones;
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -93,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " nombre = " + bluetoothDevice.getName());
         Log.d(ETIQUETA_LOG, " toString = " + bluetoothDevice.toString());
 
+        logPantalla.setText(logPantalla.getText() + ", nombre = " + bluetoothDevice.getName());
+
         /*
         ParcelUuid[] puuids = bluetoothDevice.getUuids();
         if ( puuids.length >= 1 ) {
@@ -125,6 +137,31 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
 
+        mediciones.add(
+          new Medicion(
+                  Utilidades.bytesToInt(tib.getMinor()),
+                  Utilidades.bytesToInt(tib.getMajor()),
+                  29.99600901262704,
+                  -5.16582290057630056
+          )
+        );
+
+        if(mediciones.size() > 50){
+            try {
+                // Enviar por POST
+                for (Medicion med: mediciones) {
+                    boton_enviar_pulsado(
+                            "POST",
+                            med.toString(),
+                            "http://192.168.1.34:3500/api/anyadir-medicion"
+                    );
+                }
+                mediciones.clear();
+                logPantalla.setText("Mediciones insertadas");
+            }catch (Exception error){
+                logPantalla.setText("Error al insertar");
+            }
+        }
     } // ()
 
     // --------------------------------------------------------------
@@ -266,6 +303,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        this.elTexto = (TextView) findViewById(R.id.elTexto);
+        this.elBotonEnviar = (Button) findViewById(R.id.botonEnviar);
+
+        logPantalla = findViewById(R.id.logPantalla);
+
         Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
 
         inicializarBlueTooth();
@@ -299,6 +342,77 @@ public class MainActivity extends AppCompatActivity {
         // Other 'case' lines to check for other
         // permissions this app might request.
     } // ()
+
+
+    // SERVICIO -------------
+
+    private Intent elIntentDelServicio = null;
+
+    // ---------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------
+    public void botonArrancarServicioPulsadoServ( View v ) {
+        Log.d(ETIQUETA_LOG, " boton arrancar servicio Pulsado" );
+
+        if ( this.elIntentDelServicio != null ) {
+            // ya estaba arrancado
+            return;
+        }
+
+        Log.d(ETIQUETA_LOG, " MainActivity.constructor : voy a arrancar el servicio");
+
+        this.elIntentDelServicio = new Intent(this, ServicioEscuharBeacons.class);
+
+        this.elIntentDelServicio.putExtra("tiempoDeEspera", (long) 5000);
+        startService( this.elIntentDelServicio );
+
+    } // ()
+
+    // ---------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------
+    public void botonDetenerServicioPulsadoServ( View v ) {
+
+        if ( this.elIntentDelServicio == null ) {
+            // no estaba arrancado
+            return;
+        }
+
+        stopService( this.elIntentDelServicio );
+
+        this.elIntentDelServicio = null;
+
+        Log.d(ETIQUETA_LOG, " boton detener servicio Pulsado" );
+
+
+    } // ()
+
+    // --------------------------------------------------------------
+    // --------------------------------------------------------------
+
+    // Peticiones REST
+
+    // public void boton_enviar_pulsado (View quien) {
+    // "http://192.168.1.34:3500/api/todas-las-mediciones"
+    public void boton_enviar_pulsado (String tipo, String body, String ruta) {
+        Log.d("clienterestandroid", "boton_enviar_pulsado");
+        this.logPantalla.setText("pulsado");
+
+        // ojo: creo que hay que crear uno nuevo cada vez
+        PeticionarioREST elPeticionario = new PeticionarioREST();
+        String jsontext = "{\"medida\":\""+ elTexto.getText() + "\"}";
+        elPeticionario.hacerPeticionREST(tipo,  ruta,
+                body,
+                new PeticionarioREST.RespuestaREST () {
+                    @Override
+                    public void callback(int codigo, String cuerpo) {
+                        logPantalla.setText ("codigo respuesta= " + codigo + " <-> \n" + cuerpo);
+                    }
+                }
+        );
+
+        Log.d("clienterestandroid", "HOLA");
+
+    }
+
 
 } // class
 // --------------------------------------------------------------
