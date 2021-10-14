@@ -9,91 +9,30 @@
 
     <Button
         android:id="@+id/botonBuscarDispositivosBTLEServ"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:onClick="botonBuscarDispositivosBTLEPulsado"
-        android:text="Buscar Dispositivos BTLE nou 4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003" />
-
-    <Button
-        android:id="@+id/botonDetenerBusquedaDispositivosBTLEServ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="botonDetenerBusquedaDispositivosBTLEPulsado"
-        android:text="Detener búsaqueda Dispositivos BTLE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26999998" />
-
-    <Button
-        android:id="@+id/botonBuscarNuestroDispositivoBTLE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="botonBuscarNuestroDispositivoBTLEPulsado"
-        android:text="Buscar nuestro dispositivo  BTLE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
-
-    <Button
-        android:id="@+id/botonBuscarDispositivosBTLEServ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:onClick="botonArrancarServicioPulsadoServ"
         android:text="Arrancar Servicio"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <Button
         android:id="@+id/botonDetenerBusquedaDispositivosBTLEServ"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:onClick="botonDetenerServicioPulsadoServ"
         android:text="Detener Servicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.050000012" />
-
-    <TextView
-        android:id="@+id/logPantalla"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="hola"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonEnviar" />
-
-    <EditText
-        android:id="@+id/elTexto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonBuscarNuestroDispositivoBTLE" />
-
-    <Button
-        android:id="@+id/botonEnviar"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:onClick="boton_enviar_pulsado"
-        android:text="Enviar REST"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/elTexto" />
+        app:layout_constraintTop_toBottomOf="@+id/botonBuscarDispositivosBTLEServ"
+        app:layout_constraintVertical_bias="0.060000002" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

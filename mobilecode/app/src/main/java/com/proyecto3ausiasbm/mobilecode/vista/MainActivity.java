@@ -18,8 +18,12 @@ import androidx.core.content.ContextCompat;
 import com.proyecto3ausiasbm.mobilecode.R;
 import com.proyecto3ausiasbm.mobilecode.controlador.ServicioEscuharBeacons;
 
-// ------------------------------------------------------------------
-// ------------------------------------------------------------------
+/**
+ * Esa clase es la principal de toda la app y es la que esta vinculada con la vista principal.
+ * @author ausiasbm
+ * @version 1.0
+ * 3º GTI - Proyecto
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,8 +33,15 @@ public class MainActivity extends AppCompatActivity {
     // Variables
     private BluetoothLeScanner elEscanner;
     private ScanCallback callbackDelEscaneo = null;
+    private Intent elIntentDelServicio = null;
 
-    // Iniciamos la activity
+    /**
+     *
+     * Esta método es el principal de toda la app.
+     * @param: A este método nosotros no le pasamos nada
+     * @see: Este método llama a inicializarBluetooth()
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " onCreate(): termina ");
 
     } // onCreate()
+
     // Inicializa el Bluetooth
     private void inicializarBlueTooth() {
         Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): obtenemos adaptador BT ");
@@ -84,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     } // ()
+
     // Pide permisos si no los tiene
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
@@ -109,9 +122,7 @@ public class MainActivity extends AppCompatActivity {
         // permissions this app might request.
     } // ()
 
-    // SERVICIO -------------
-
-    private Intent elIntentDelServicio = null;
+    // Botones para Arrancar y parar el SERVICIO -------------
 
     public void botonArrancarServicioPulsadoServ( View v ) {
         Log.d(ETIQUETA_LOG, " boton arrancar servicio Pulsado" );

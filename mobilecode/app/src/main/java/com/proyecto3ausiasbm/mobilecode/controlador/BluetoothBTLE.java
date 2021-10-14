@@ -20,13 +20,14 @@ public class BluetoothBTLE {
 
     // Variables
     private static final String ETIQUETA_LOG = ">>>>";
-    private static final int CODIGO_PETICION_PERMISOS = 11223344;
     private BluetoothLeScanner elEscanner;
     private ScanCallback callbackDelEscaneo = null;
     private List<Medicion> mediciones;
 
+    public void BluetoothBTLE(){};
+
     // Métodos
-    private void buscarTodosLosDispositivosBTLE() {
+    public void buscarTodosLosDispositivosBTLE() {
 
         this.detenerBusquedaDispositivosBTLE();
         Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empieza ");
@@ -64,7 +65,7 @@ public class BluetoothBTLE {
     } // ()
 
     // --> "AusiasBM-GTI"
-    private void buscarEsteDispositivoBTLE(final String dispositivoBuscado ) {
+    public void buscarEsteDispositivoBTLE(final String dispositivoBuscado ) {
 
         this.detenerBusquedaDispositivosBTLE();
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
@@ -173,7 +174,7 @@ public class BluetoothBTLE {
             try {
                 // Enviar por POST
                 for (Medicion med: mediciones) {
-                    boton_enviar_pulsado(
+                    enviarPeticionRest(
                             "POST",
                             med.toString(),
                             "http://192.168.1.34:3500/api/anyadir-medicion"
@@ -189,10 +190,9 @@ public class BluetoothBTLE {
 
     // Peticiones REST
 
-    // public void boton_enviar_pulsado (View quien) {
     // "http://192.168.1.34:3500/api/todas-las-mediciones"
-    public void boton_enviar_pulsado (String tipo, String body, String ruta) {
-        Log.d("clienterestandroid", "boton_enviar_pulsado");
+    public void enviarPeticionRest(String tipo, String body, String ruta) {
+        Log.d("clienterestandroid", "Entramos en petición REST");
 
         // ojo: creo que hay que crear uno nuevo cada vez
         PeticionarioREST elPeticionario = new PeticionarioREST();
