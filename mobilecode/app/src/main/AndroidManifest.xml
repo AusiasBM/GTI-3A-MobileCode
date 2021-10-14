@@ -23,7 +23,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.MobileCode">
         <activity
-            android:name=".MainActivity"
+            android:name=".vista.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".ServicioEscuharBeacons" />
+        <service android:name=".controlador.ServicioEscuharBeacons" />
     </application>
 
 </manifest>
