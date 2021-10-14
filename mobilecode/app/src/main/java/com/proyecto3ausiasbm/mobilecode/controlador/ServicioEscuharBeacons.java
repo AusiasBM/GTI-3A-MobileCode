@@ -21,7 +21,7 @@ public class ServicioEscuharBeacons  extends IntentService {
 
     public ServicioEscuharBeacons(  ) {
         super("HelloIntentService");
-        
+
         Log.d(ETIQUETA_LOG, " ServicioEscucharBeacons.constructor: termina");
     }
 
