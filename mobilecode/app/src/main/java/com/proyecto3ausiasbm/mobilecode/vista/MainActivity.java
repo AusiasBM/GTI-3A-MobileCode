@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.content.Intent;
+import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.proyecto3ausiasbm.mobilecode.R;
+import com.proyecto3ausiasbm.mobilecode.controlador.BluetoothBTLE;
 import com.proyecto3ausiasbm.mobilecode.controlador.ServicioEscuharBeacons;
 
 /**
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
     // Variables
     private BluetoothLeScanner elEscanner;
-    private ScanCallback callbackDelEscaneo = null;
     private Intent elIntentDelServicio = null;
+    public static BluetoothBTLE bluetoothBTLE;
 
     /**
      *
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(ETIQUETA_LOG, " inicializarBlueTooth(): parece que YA tengo los permisos necesarios !!!!");
 
         }
+        bluetoothBTLE = new BluetoothBTLE(elEscanner);
     } // ()
 
     // Pide permisos si no los tiene

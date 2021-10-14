@@ -5,7 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.util.Log;
 
-import com.proyecto3ausiasbm.mobilecode.controlador.BluetoothBTLE;
+import com.proyecto3ausiasbm.mobilecode.vista.MainActivity;
 import static android.app.Service.START_STICKY;
 
 // -------------------------------------------------------------------------------------------------
@@ -16,12 +16,11 @@ public class ServicioEscuharBeacons  extends IntentService {
     private static final String ETIQUETA_LOG = ">>>>";
     private long tiempoDeEspera = 10000;
     private boolean seguir = true;
-
+    private BluetoothBTLE bluetoothBTLE = MainActivity.bluetoothBTLE;
     // Métodos
 
     public ServicioEscuharBeacons(  ) {
         super("HelloIntentService");
-
         Log.d(ETIQUETA_LOG, " ServicioEscucharBeacons.constructor: termina");
     }
 
@@ -62,9 +61,7 @@ public class ServicioEscuharBeacons  extends IntentService {
             while ( this.seguir ) {
                 Thread.sleep(tiempoDeEspera);
                 Log.d(ETIQUETA_LOG, " ServicioEscucharBeacons.onHandleIntent: tras la espera:  " + contador );
-
-
-
+                bluetoothBTLE.buscarEsteDispositivoBTLE("AusiasBM-GTI");
                 contador++;
             }
 

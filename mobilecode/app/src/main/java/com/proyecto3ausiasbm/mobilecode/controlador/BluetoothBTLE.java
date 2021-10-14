@@ -24,7 +24,9 @@ public class BluetoothBTLE {
     private ScanCallback callbackDelEscaneo = null;
     private List<Medicion> mediciones;
 
-    public void BluetoothBTLE(){};
+    public BluetoothBTLE(BluetoothLeScanner elEscanner) {
+        this.elEscanner = elEscanner;
+    }
 
     // Métodos
     public void buscarTodosLosDispositivosBTLE() {
@@ -160,7 +162,7 @@ public class BluetoothBTLE {
                 + Utilidades.bytesToInt(tib.getMinor()) + " ) ");
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
-
+/*
         mediciones.add(
                 new Medicion(
                         Utilidades.bytesToInt(tib.getMinor()),
@@ -185,7 +187,7 @@ public class BluetoothBTLE {
             }catch (Exception error){
                 Log.d(ETIQUETA_LOG, "Error en la petición");
             }
-        }
+        }*/
     } // ()
 
     // Peticiones REST
