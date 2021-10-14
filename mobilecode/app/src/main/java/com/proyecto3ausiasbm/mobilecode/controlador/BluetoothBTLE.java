@@ -1,4 +1,4 @@
-package com.proyecto3ausiasbm.mobilecode;
+package com.proyecto3ausiasbm.mobilecode.controlador;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.BluetoothLeScanner;
@@ -7,7 +7,11 @@ import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.util.Log;
-import android.view.View;
+
+import com.proyecto3ausiasbm.mobilecode.modelo.Medicion;
+import com.proyecto3ausiasbm.mobilecode.modelo.PeticionarioREST;
+import com.proyecto3ausiasbm.mobilecode.modelo.TramaIBeacon;
+import com.proyecto3ausiasbm.mobilecode.modelo.Utilidades;
 
 import java.util.ArrayList;
 import java.util.List;

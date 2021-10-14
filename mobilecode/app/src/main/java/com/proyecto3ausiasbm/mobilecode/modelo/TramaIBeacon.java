@@ -1,5 +1,5 @@
 
-package com.proyecto3ausiasbm.mobilecode;
+package com.proyecto3ausiasbm.mobilecode.modelo;
 
 import java.util.Arrays;
 

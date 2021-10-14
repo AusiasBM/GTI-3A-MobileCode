@@ -1,4 +1,4 @@
-package com.proyecto3ausiasbm.mobilecode;
+package com.proyecto3ausiasbm.mobilecode.controlador;
 
 import android.app.IntentService;
 import android.app.Service;
