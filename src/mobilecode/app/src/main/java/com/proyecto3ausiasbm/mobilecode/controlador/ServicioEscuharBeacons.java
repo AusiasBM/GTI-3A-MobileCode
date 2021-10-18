@@ -75,6 +75,7 @@ public class ServicioEscuharBeacons  extends IntentService {
             Thread.currentThread().interrupt();
         }
 
+        this.bluetoothBTLE.detenerBusquedaDispositivosBTLE();
         Log.d(ETIQUETA_LOG, " ServicioEscucharBeacons.onHandleItent: termina");
 
     }

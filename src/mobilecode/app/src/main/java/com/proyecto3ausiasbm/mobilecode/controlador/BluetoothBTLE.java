@@ -12,6 +12,7 @@ import com.proyecto3ausiasbm.mobilecode.modelo.Medicion;
 import com.proyecto3ausiasbm.mobilecode.modelo.PeticionarioREST;
 import com.proyecto3ausiasbm.mobilecode.modelo.TramaIBeacon;
 import com.proyecto3ausiasbm.mobilecode.modelo.Utilidades;
+import com.proyecto3ausiasbm.mobilecode.vista.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class BluetoothBTLE {
     private static final String ETIQUETA_LOG = ">>>>";
     private BluetoothLeScanner elEscanner;
     private ScanCallback callbackDelEscaneo = null;
-    private List<Medicion> mediciones;
+    public List<Medicion> mediciones;
 
     public BluetoothBTLE(BluetoothLeScanner elEscanner) {
         this.elEscanner = elEscanner;
@@ -83,6 +84,7 @@ public class BluetoothBTLE {
                 super.onScanResult(callbackType, resultado);
                 Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
                 mostrarInformacionDispositivoBTLE( resultado );
+                anyadirBeacon( dispositivoBuscado, resultado );
             }
 
             @Override
@@ -115,7 +117,7 @@ public class BluetoothBTLE {
         this.elEscanner.startScan(filters, settings, this.callbackDelEscaneo );
     } // ()
 
-    private void detenerBusquedaDispositivosBTLE() {
+    public void detenerBusquedaDispositivosBTLE() {
 
         if ( this.callbackDelEscaneo == null ) {
             return;
@@ -162,38 +164,63 @@ public class BluetoothBTLE {
                 + Utilidades.bytesToInt(tib.getMinor()) + " ) ");
         Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
-/*
-        mediciones.add(
-                new Medicion(
-                        Utilidades.bytesToInt(tib.getMinor()),
-                        Utilidades.bytesToInt(tib.getMajor()),
-                        29.99600901262704,
-                        -5.16582290057630056
-                )
-        );
 
-        if(mediciones.size() > 50){
-            try {
-                // Enviar por POST
-                for (Medicion med: mediciones) {
-                    enviarPeticionRest(
-                            "POST",
-                            med.toString(),
-                            "http://192.168.1.34:3500/api/anyadir-medicion"
-                    );
-                }
-                mediciones.clear();
-                Log.d(ETIQUETA_LOG, "Petición enviada");
-            }catch (Exception error){
-                Log.d(ETIQUETA_LOG, "Error en la petición");
-            }
-        }*/
+        if(Utilidades.bytesToInt(tib.getMajor()) == 11){
+            MainActivity.textCo2.setText(Utilidades.bytesToInt(tib.getMinor()) + "");
+        }else{
+            MainActivity.textTemp.setText(Utilidades.bytesToInt(tib.getMinor()) + "");
+        }
+
     } // ()
+
+    private void anyadirBeacon(final String dispositivoBuscado, ScanResult resultado) {
+
+        BluetoothDevice bluetoothDevice = resultado.getDevice();
+        byte[] bytes = resultado.getScanRecord().getBytes();
+        TramaIBeacon tib = new TramaIBeacon(bytes);
+
+        if ((bluetoothDevice.getName() + "").equals(dispositivoBuscado)) {
+            Log.d("Dispositivo encontrado correcto -->", dispositivoBuscado);
+            Log.d("Dispositivo encontrado correcto -->", "Preparamos el objeto");
+
+            //Utilidades.bytesToInt(tib.getMajor())
+            //Utilidades.bytesToInt(tib.getMinor())
+
+            mediciones.add(
+                    new Medicion(
+                            Utilidades.bytesToInt(tib.getMinor()),
+                            Utilidades.bytesToInt(tib.getMajor()),
+                            29.99600901262704,
+                            -5.16582290057630056
+                    )
+            );
+
+            Log.d("Dispositivo encontrado correcto -->", "Lo añadimos al array de 50");
+            if (mediciones.size() > 50) {
+                try {
+                    Log.d("Dispositivo encontrado correcto -->", "Enviamos las 50 mediciones");
+                    // Enviar por POST
+                    for (Medicion med : mediciones) {
+                        enviarPeticionRest(
+                                "POST",
+                                med.toString(),
+                                "http://192.168.1.42:3500/api/anyadir-medicion"
+                        );
+                    }
+                    mediciones.clear();
+                    Log.d("Dispositivo encontrado correcto -->", "Medidas enviadas correctamente");
+                } catch (Exception error) {
+                    Log.d("Dispositivo encontrado correcto -->", "Error al enviar las medidas");
+                }
+            }
+
+        }
+    }
 
     // Peticiones REST
 
     // "http://192.168.1.34:3500/api/todas-las-mediciones"
-    public void enviarPeticionRest(String tipo, String body, String ruta) {
+    private void enviarPeticionRest(String tipo, String body, String ruta) {
         Log.d("clienterestandroid", "Entramos en petición REST");
 
         // ojo: creo que hay que crear uno nuevo cada vez

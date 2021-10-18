@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothLeScanner elEscanner;
     private Intent elIntentDelServicio = null;
     public static BluetoothBTLE bluetoothBTLE;
+    public static TextView textCo2, textTemp;
+
 
     /**
      *
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.d(ETIQUETA_LOG, " onCreate(): empieza ");
+
+        textCo2 = findViewById(R.id.textViewCo2);
+        textTemp = findViewById(R.id.textViewTemp);
 
         inicializarBlueTooth();
 
@@ -127,13 +134,15 @@ public class MainActivity extends AppCompatActivity {
 
     // Botones para Arrancar y parar el SERVICIO -------------
 
-    public void botonArrancarServicioPulsadoServ( View v ) {
+    public void botonArrancarServicio(View v ) {
         Log.d(ETIQUETA_LOG, " boton arrancar servicio Pulsado" );
 
         if ( this.elIntentDelServicio != null ) {
             // ya estaba arrancado
             return;
         }
+
+        Toast.makeText(this, "Detección del sensor Activado", Toast.LENGTH_LONG).show();
 
         Log.d(ETIQUETA_LOG, " MainActivity.constructor : voy a arrancar el servicio");
 
@@ -144,12 +153,14 @@ public class MainActivity extends AppCompatActivity {
 
     } // ()
 
-    public void botonDetenerServicioPulsadoServ( View v ) {
+    public void botonDetenerServicio(View v ) {
 
         if ( this.elIntentDelServicio == null ) {
             // no estaba arrancado
             return;
         }
+
+        Toast.makeText(this, "Detección del sensor Desactivado", Toast.LENGTH_LONG).show();
 
         stopService( this.elIntentDelServicio );
 
@@ -157,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(ETIQUETA_LOG, " boton detener servicio Pulsado" );
 
-
+        textTemp.setText("--");
+        textCo2.setText("--");
     } // ()
 
 } // class

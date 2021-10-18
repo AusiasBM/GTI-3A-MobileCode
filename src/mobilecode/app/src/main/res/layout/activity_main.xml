@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:onClick="botonArrancarServicioPulsadoServ"
+        android:backgroundTint="#FF9800"
+        android:onClick="botonArrancarServicio"
         android:text="Arrancar Servicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.42000002" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/botonDetenerBusquedaDispositivosBTLEServ"
@@ -27,12 +28,130 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:onClick="botonDetenerServicioPulsadoServ"
+        android:backgroundTint="#FF9800"
+        android:onClick="botonDetenerServicio"
         android:text="Detener Servicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botonBuscarDispositivosBTLEServ"
         app:layout_constraintVertical_bias="0.060000002" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#FF9800"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/qr"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tituloApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="AIRLITY"
+        android:textColor="#FF9800"
+        android:textSize="100sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/poppins"
+        android:text="Ausias Bañuls Mahiques"
+        android:textColor="#FF9800"
+        app:layout_constraintBottom_toBottomOf="@+id/tituloApp"
+        app:layout_constraintEnd_toEndOf="@+id/tituloApp"
+        app:layout_constraintStart_toStartOf="@+id/tituloApp" />
+
+    <TextView
+        android:id="@+id/tituloCo2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="CO2"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonDetenerBusquedaDispositivosBTLEServ" />
+
+    <TextView
+        android:id="@+id/textViewCo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_light"
+        android:text="--"
+        android:textAlignment="center"
+        android:textColor="#FF9800"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/tituloCo2"
+        app:layout_constraintStart_toStartOf="@+id/tituloCo2"
+        app:layout_constraintTop_toBottomOf="@+id/tituloCo2" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="?android:attr/listDivider"
+        android:backgroundTint="#FF9800"
+        app:layout_constraintBottom_toTopOf="@+id/tituloTemp"
+        app:layout_constraintEnd_toEndOf="@+id/tituloCo2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tituloCo2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCo2"
+        app:layout_constraintVertical_bias="0.739" />
+
+    <TextView
+        android:id="@+id/tituloTemp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Temperatura"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="@+id/tituloCo2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tituloCo2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCo2" />
+
+    <TextView
+        android:id="@+id/textViewTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins_light"
+        android:text="--"
+        android:textAlignment="center"
+        android:textColor="#FF9800"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="@+id/tituloCo2"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/tituloCo2"
+        app:layout_constraintTop_toBottomOf="@+id/tituloTemp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
